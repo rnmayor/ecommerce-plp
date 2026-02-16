@@ -1,0 +1,5 @@
+packages:
+  - 'ecommerce-plp'
+  - 'packages/*'
+  - '!**/node_modules/**'
+  - '!**/dist/**'

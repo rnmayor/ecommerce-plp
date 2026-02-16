@@ -1,0 +1,35 @@
+{
+  "name": "ecommerce-plp",
+  "version": "1.0.0",
+  "description": "Mini e-commerce web application showing high-quality Product Listings Page (PLP)",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter \"./ecommerce-plp\" dev",
+    "build": "pnpm build:packages && pnpm build:app",
+    "build:packages": "pnpm -r --filter \"./packages/*\" build",
+    "build:app": "pnpm -r --filter \"./ecommerce-plp\" build",
+    "lint": "eslint . --max-warnings=0 && echo \"ESLint: No issues found.\"",
+    "test": "echo \"Error: no test configured\"",
+    "prepare": "husky",
+    "format": "prettier --write .",
+    "type-check": "pnpm -r --filter \"./packages/*\" type-check"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.6",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [],
+  "author": "Ronel Mayor",
+  "license": "ISC",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": "24.x"
+  }
+}
