@@ -1,12 +1,33 @@
 import { z } from 'zod';
 
-export const ProductSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  description: z.string(),
-  category: z.string(),
-  price: z.number(),
+const ReviewSchema = z.object({
+  rating: z.number(),
+  comment: z.string(),
+  reviewerName: z.string(),
 });
+
+export const ProductSchema = z
+  .object({
+    id: z.number(),
+    title: z.string(),
+    description: z.string(),
+    category: z.string(),
+    price: z.number(),
+    discountPercentage: z.number(),
+    rating: z.number(),
+    reviews: z.array(ReviewSchema),
+    thumbnail: z.url(),
+  })
+  .transform((data) => ({
+    ...data,
+    reviewCount: data.reviews.length,
+    formattedPrice: new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(data.price),
+    formattedDiscount:
+      data.discountPercentage > 0 ? `${Math.round(data.discountPercentage)}% OFF` : null,
+  }));
 
 export type Product = z.infer<typeof ProductSchema>;
 
