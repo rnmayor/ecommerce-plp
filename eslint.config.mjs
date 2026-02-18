@@ -10,9 +10,9 @@ import prettier from 'eslint-config-prettier';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Collect all tsconfig.json files acrross apps and packages
+// Collect all tsconfig.json files acrross ecommerce-plp and packages
 const tsconfigPaths = [];
-['apps', 'packages'].forEach((dir) => {
+['ecommerce-plp', 'packages'].forEach((dir) => {
   const baseDir = path.join(__dirname, dir);
   if (fs.existsSync(baseDir)) {
     for (const folder of fs.readdirSync(baseDir)) {
@@ -52,9 +52,9 @@ export default defineConfig([
         version: 'detect',
       },
       next: {
-        rootDir: ['apps/*/'],
+        rootDir: ['ecommerce-plp/'],
       },
-      // explicitly added to handle monorepo path aliases for Typescript accross apps/packages
+      // explicitly added to handle monorepo path aliases for Typescript accross ecommerce-plp/packages
       'import/resolver': {
         typescript: {
           project: tsconfigPaths,
