@@ -42,6 +42,9 @@ export const RawProductResponseSchema = z.object({
 
 export const ProductListResponseSchema = RawProductResponseSchema.extend({
   page: z.number(),
+  totalPages: z.number(),
+  hasPrevPage: z.boolean(),
+  hasNextPage: z.boolean(),
 });
 
 export type RawProductListResponse = z.infer<typeof RawProductResponseSchema>;

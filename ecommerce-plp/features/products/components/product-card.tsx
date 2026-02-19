@@ -36,16 +36,16 @@ export const ProductCard = ({ product }: ProductProps) => {
         />
       </div>
       <CardHeader>
-        <div className="flex items-start justify-between gap-2">
-          <CardTitle title={product.title} className="line-clamp-1 text-lg">
-            {product.title}
-          </CardTitle>
-          <span className="text-lg font-bold text-primary">{product.formattedPrice}</span>
-        </div>
-        <div className="flex items-center gap-x-1 text-sm text-muted-foreground">
-          <Star size={14} className="text-yellow-500 fill-yellow-500" />
-          <span className="font-medium text-foreground">{product.rating}</span>
-          <span>({product.reviewCount})</span>
+        <CardTitle title={product.title} className="line-clamp-1 text-lg">
+          {product.title}
+        </CardTitle>
+        <div className="flex justify-between">
+          <span className="text-xl font-bold text-primary">{product.formattedPrice}</span>
+          <div className="flex items-center gap-x-1 text-sm text-muted-foreground">
+            <Star size={14} className="text-yellow-500 fill-yellow-500" />
+            <span className="font-medium text-foreground">{product.rating}</span>
+            <span>({product.reviewCount})</span>
+          </div>
         </div>
       </CardHeader>
       <CardContent>

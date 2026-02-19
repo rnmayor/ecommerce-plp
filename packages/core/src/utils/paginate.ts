@@ -1,4 +1,4 @@
-export function paginate<T>(items: T[], page: number = 1, limit: number = 10) {
+export function paginate<T>(items: T[], page: number = 1, limit: number) {
   // Guard against invalid inputs
   const safePage = Math.max(1, page);
   const safeLimit = Math.max(1, limit);
@@ -10,9 +10,9 @@ export function paginate<T>(items: T[], page: number = 1, limit: number = 10) {
   return {
     items: items.slice(skip, skip + safeLimit),
     total,
-    page: safePage,
     limit: safeLimit,
     skip,
+    page: safePage,
     totalPages,
     hasNextPage: safePage < totalPages,
     hasPrevPage: safePage > 1,

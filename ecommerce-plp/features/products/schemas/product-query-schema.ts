@@ -26,7 +26,7 @@ export const ProductQuerySchema = z.object({
       };
     }),
   page: z.coerce.number().min(1).default(1),
-  limit: z.coerce.number().min(1).max(100).default(30),
+  limit: z.coerce.number().min(1).max(200).default(30),
 });
 
 export type ProductQuery = z.infer<typeof ProductQuerySchema>;

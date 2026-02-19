@@ -2,7 +2,7 @@ import { type RawProductListResponse, RawProductResponseSchema } from '../schema
 
 import type { IProductRepository } from './product-repository-interface';
 
-const BASE_URL = 'https://dummyjson.com/products';
+const BASE_URL = `https://dummyjson.com/products`; // ?limit=1000
 
 export const jsonRepository = (): IProductRepository => {
   return {

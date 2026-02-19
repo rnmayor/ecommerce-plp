@@ -1,4 +1,5 @@
 import { paginate, sortItems } from '@ecommerce/core';
+import { z } from 'zod';
 
 import { SEARCHABLE_KEYS } from '../constants';
 import { ProductListResponseSchema, type ProductListResponse } from '../schemas/product-schema';
@@ -31,12 +32,25 @@ export async function getProducts(
   const sorted = sortItems(products, sort.key, sort.order);
 
   // paginate
-  const { items, total, page, limit, skip } = paginate(sorted, pageQuery, limitQuery);
-  const output = { products: items, total, page, limit, skip };
-  const result = ProductListResponseSchema.safeParse(output);
+  const { items, total, limit, skip, page, totalPages, hasPrevPage, hasNextPage } = paginate(
+    sorted,
+    pageQuery,
+    limitQuery,
+  );
+  const output = {
+    products: items,
+    total,
+    limit,
+    skip,
+    page,
+    totalPages,
+    hasPrevPage,
+    hasNextPage,
+  };
 
+  const result = ProductListResponseSchema.safeParse(output);
   if (!result.success) {
-    console.error('API Output Validation Error:', result.error.flatten().fieldErrors);
+    console.error('API Output Validation Error:', z.flattenError(result.error).fieldErrors);
     throw new Error('DATA_INTEGRITY_ERROR');
   }
 

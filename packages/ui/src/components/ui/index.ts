@@ -1,6 +1,24 @@
 export { Badge } from './badge';
 export { Button } from './button';
 export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+} from './card';
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  useCarousel,
+} from './carousel';
+export {
   Combobox,
   ComboboxInput,
   ComboboxContent,
@@ -18,15 +36,6 @@ export {
   ComboboxValue,
   useComboboxAnchor,
 } from './combobox';
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-} from './card';
 export { Input } from './input';
 export {
   InputGroup,
@@ -36,4 +45,13 @@ export {
   InputGroupInput,
   InputGroupTextarea,
 } from './input-group';
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './pagination';
 export { Textarea } from './text-area';

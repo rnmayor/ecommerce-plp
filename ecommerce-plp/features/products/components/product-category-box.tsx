@@ -1,7 +1,30 @@
 'use client';
 
 import { cn } from '@ecommerce/ui';
-import { Flower, ShoppingBasket, Sofa, Sparkles } from 'lucide-react';
+import {
+  Bike,
+  Briefcase,
+  CarFront,
+  Citrus,
+  Droplets,
+  Dumbbell,
+  Flower,
+  Footprints,
+  Gem,
+  Glasses,
+  Headphones,
+  Lamp,
+  Laptop,
+  Shirt,
+  ShoppingBag,
+  ShoppingBasket,
+  Smartphone,
+  Sofa,
+  Sparkles,
+  TableProperties,
+  UtensilsCrossed,
+  Watch,
+} from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
@@ -10,6 +33,24 @@ const iconMap = {
   flower: Flower,
   sofa: Sofa,
   shoppingBasket: ShoppingBasket,
+  lamp: Lamp,
+  utensilsCrossed: UtensilsCrossed,
+  laptop: Laptop,
+  shirt: Shirt,
+  footprints: Footprints,
+  watch: Watch,
+  headphones: Headphones,
+  bike: Bike,
+  droplets: Droplets,
+  smartphone: Smartphone,
+  dumbbell: Dumbbell,
+  glasses: Glasses,
+  tableProperties: TableProperties,
+  shoppingBag: ShoppingBag,
+  carFront: CarFront,
+  briefcase: Briefcase,
+  citrus: Citrus,
+  gem: Gem,
 };
 
 type IconName = keyof typeof iconMap;
@@ -70,14 +111,20 @@ export const ProductCategoryBox = ({ label, icon }: ProductCategoryBoxProps) => 
     <div
       onClick={handleClick}
       className={cn(
-        'flex flex-col w-[100px] items-center justify-center gap-2 p-3 rounded-xl transition-all cursor-pointer shadow-sm hover:scale-105 hover:shadow-md',
+        'flex flex-col w-[110px] h-22 items-center justify-between p-3 gap-2 rounded-xl transition-all cursor-pointer shadow-sm hover:scale-105 hover:shadow-md',
         isSelected
           ? `bg-foreground/80 text-background shadow-inner`
           : `text-muted-foreground border border-border hover:text-primary hover:bg-accent`,
       )}
     >
-      <Icon size={26} />
-      <div className="font-semibold text-xs tracking-wide uppercase">{label}</div>
+      <div className="flex flex-1 items-center justify-center">
+        <Icon size={26} />
+      </div>
+      <div className="flex items-center justify-center h-8 w-full mt-auto">
+        <div title={label} className="font-semibold text-xs leading-tight text-center line-clamp-2">
+          {label}
+        </div>
+      </div>
     </div>
   );
 };
