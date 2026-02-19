@@ -1,15 +1,10 @@
 import { paginate, sortItems } from '@ecommerce/core';
 
-import {
-  ProductListResponseSchema,
-  type Product,
-  type ProductListResponse,
-} from '../schemas/product-schema';
+import { SEARCHABLE_KEYS } from '../constants';
+import { ProductListResponseSchema, type ProductListResponse } from '../schemas/product-schema';
 
 import type { IProductRepository } from '../repositories/product-repository-interface';
 import type { ProductQuery } from '../schemas/product-query-schema';
-
-const SEARCHABLE_KEYS: (keyof Product)[] = ['title', 'description'];
 
 export async function getProducts(
   query: ProductQuery,

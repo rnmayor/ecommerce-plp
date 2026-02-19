@@ -26,7 +26,9 @@ export const ProductSchema = z
       currency: 'USD',
     }).format(data.price),
     formattedDiscount:
-      data.discountPercentage > 0 ? `${Math.round(data.discountPercentage)}% OFF` : null,
+      data.discountPercentage && Math.round(data.discountPercentage) > 0
+        ? `${Math.round(data.discountPercentage)}% OFF`
+        : null,
   }));
 
 export type Product = z.infer<typeof ProductSchema>;

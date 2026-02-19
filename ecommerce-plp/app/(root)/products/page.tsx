@@ -1,6 +1,7 @@
 import { getProductsAction } from 'features/products/actions/get-products';
 import { ProductCard } from 'features/products/components/product-card';
 import { ProductCategoryBox } from 'features/products/components/product-category-box';
+import { ProductSearch } from 'features/products/components/product-search';
 import { ProductSortSelect } from 'features/products/components/product-sort-select';
 import { CATEGORIES } from 'features/products/constants';
 
@@ -19,13 +20,19 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       <h1 className="text-4xl font-bold uppercase tracking-wide text-center pb-5">
         Product Listings Page
       </h1>
-      <div className="flex w-full items-center justify-center gap-4 flex-wrap">
+      <div className="flex w-full items-center justify-center gap-4 flex-wrap pb-4">
         {CATEGORIES.map((item) => (
           <ProductCategoryBox key={item.label} label={item.label} icon={item.icon} />
         ))}
       </div>
-      <div className="flex w-full justify-end">
-        <ProductSortSelect />
+      <div className="flex w-full flex-col gap-y-4 items-center py-4 md:grid md:grid-cols-3">
+        <div className="hidden md:block" />
+        <div className="flex w-full max-w-md justify-center">
+          <ProductSearch />
+        </div>
+        <div className="flex justify-start md:justify-end">
+          <ProductSortSelect />
+        </div>
       </div>
       <div className="grid w-full justify-items-center gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {result.products.map((product: Product) => (

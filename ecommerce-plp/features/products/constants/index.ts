@@ -1,3 +1,5 @@
+import type { Product } from '../schemas/product-schema';
+
 export const CATEGORIES = [
   {
     label: 'Beauty',
@@ -36,3 +38,5 @@ export const SORT_OPTIONS: SortOption[] = [
     value: 'rating-desc',
   },
 ];
+
+export const SEARCHABLE_KEYS: (keyof Product)[] = ['title', 'description'];
