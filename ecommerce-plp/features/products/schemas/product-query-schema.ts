@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { SORT_OPTIONS } from '../constants';
+
 export const ProductQuerySchema = z.object({
   search: z.string().optional(),
   category: z
@@ -13,7 +15,7 @@ export const ProductQuerySchema = z.object({
         .filter(Boolean);
     }),
   sort: z
-    .enum(['price-asc', 'price-desc'])
+    .enum(SORT_OPTIONS.map((o) => o.value))
     .optional()
     .transform((val) => {
       if (!val) return { key: 'id' as const, order: 'asc' as const };

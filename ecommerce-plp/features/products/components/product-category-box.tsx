@@ -14,12 +14,12 @@ const iconMap = {
 
 type IconName = keyof typeof iconMap;
 
-interface CategoryBoxProps {
+interface ProductCategoryBoxProps {
   label: string;
   icon: IconName;
 }
 
-export const CategoryBox = ({ label, icon }: CategoryBoxProps) => {
+export const ProductCategoryBox = ({ label, icon }: ProductCategoryBoxProps) => {
   const Icon = iconMap[icon];
 
   const router = useRouter();
@@ -73,7 +73,7 @@ export const CategoryBox = ({ label, icon }: CategoryBoxProps) => {
         'flex flex-col w-[100px] items-center justify-center gap-2 p-3 rounded-xl transition-all cursor-pointer shadow-sm hover:scale-105 hover:shadow-md',
         isSelected
           ? `bg-foreground/80 text-background shadow-inner`
-          : `text-muted-foreground border border-border hover:text-accent-foreground hover:bg-accent`,
+          : `text-muted-foreground border border-border hover:text-primary hover:bg-accent`,
       )}
     >
       <Icon size={26} />
