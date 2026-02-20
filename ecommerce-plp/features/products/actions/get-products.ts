@@ -1,3 +1,5 @@
+'use server';
+
 import { jsonRepository } from '../repositories/json-repository';
 import { ProductQuerySchema } from '../schemas/product-query-schema';
 import { getProducts } from '../services/product-service';

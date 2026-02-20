@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     }
 
     if (error instanceof Error && error.message === 'DATA_INTEGRITY_ERROR') {
-      return NextResponse.json({ message: 'Internal Data Error' }, { status: 500 });
+      return NextResponse.json({ message: 'Data Integrity Error' }, { status: 500 });
     }
 
     return NextResponse.json({ message: 'An unexpected error occured' }, { status: 500 });

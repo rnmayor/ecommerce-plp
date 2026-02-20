@@ -2,7 +2,11 @@ import { paginate, sortItems } from '@ecommerce/core';
 import { z } from 'zod';
 
 import { SEARCHABLE_KEYS } from '../constants';
-import { ProductListResponseSchema, type ProductListResponse } from '../schemas/product-schema';
+import {
+  ProductListResponseSchema,
+  type ProductListResponse,
+  type Product,
+} from '../schemas/product-schema';
 
 import type { IProductRepository } from '../repositories/product-repository-interface';
 import type { ProductQuery } from '../schemas/product-query-schema';
@@ -55,4 +59,8 @@ export async function getProducts(
   }
 
   return result.data;
+}
+
+export async function getProductById(id: string, repository: IProductRepository): Promise<Product> {
+  return await repository.findById(id);
 }

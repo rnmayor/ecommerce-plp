@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Badge,
   Button,
@@ -10,6 +12,8 @@ import {
 } from '@ecommerce/ui';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import type { Product } from '../schemas/product-schema';
 
@@ -18,6 +22,8 @@ interface ProductProps {
 }
 
 export const ProductCard = ({ product }: ProductProps) => {
+  const pathname = usePathname();
+
   return (
     <Card className="h-[400px] w-full max-w-[260px] group relative overflow-hidden transition-all hover:shadow-lg">
       {product.formattedDiscount && (
@@ -25,7 +31,10 @@ export const ProductCard = ({ product }: ProductProps) => {
           {product.formattedDiscount}
         </Badge>
       )}
-      <div className="relative h-[200px] w-full overflow-hidden bg-muted">
+      <Link
+        className="relative h-[200px] w-full overflow-hidden bg-muted"
+        href={`${pathname}/${product.id}`}
+      >
         <Image
           src={product.thumbnail}
           alt="Product Cover"
@@ -34,17 +43,17 @@ export const ProductCard = ({ product }: ProductProps) => {
           className="object-contain transition-transform duration-300 group-hover:scale-105"
           priority
         />
-      </div>
+      </Link>
       <CardHeader>
-        <CardTitle title={product.title} className="line-clamp-1 text-lg">
-          {product.title}
+        <CardTitle title={product.title} className="line-clamp-1 text-lg hover:underline">
+          <Link href={`${pathname}/${product.id}`}>{product.title}</Link>
         </CardTitle>
         <div className="flex justify-between">
           <span className="text-xl font-bold text-primary">{product.formattedPrice}</span>
-          <div className="flex items-center gap-x-1 text-sm text-muted-foreground">
-            <Star size={14} className="text-yellow-500 fill-yellow-500" />
+          <div className="flex items-center gap-x-1 text-yellow-500">
+            <Star size={14} fill="currentColor" />
             <span className="font-medium text-foreground">{product.rating}</span>
-            <span>({product.reviewCount})</span>
+            <span className="text-muted-foreground">({product.reviewCount})</span>
           </div>
         </div>
       </CardHeader>
@@ -54,8 +63,8 @@ export const ProductCard = ({ product }: ProductProps) => {
         </CardDescription>
       </CardContent>
       <CardFooter>
-        <Button size={'lg'} className="w-full">
-          Add to Cart
+        <Button asChild size="lg" className="w-full">
+          <Link href={`${pathname}/${product.id}`}>Add to Cart</Link>
         </Button>
       </CardFooter>
     </Card>

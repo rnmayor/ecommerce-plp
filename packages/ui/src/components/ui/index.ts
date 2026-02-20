@@ -1,6 +1,12 @@
 export { Badge } from './badge';
 export { Button } from './button';
 export {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+  buttonGroupVariants,
+} from './button-group';
+export {
   Card,
   CardHeader,
   CardFooter,
@@ -54,4 +60,5 @@ export {
   PaginationNext,
   PaginationPrevious,
 } from './pagination';
+export { Separator } from './separator';
 export { Textarea } from './text-area';

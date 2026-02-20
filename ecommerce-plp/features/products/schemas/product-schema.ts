@@ -4,6 +4,7 @@ const ReviewSchema = z.object({
   rating: z.number(),
   comment: z.string(),
   reviewerName: z.string(),
+  date: z.string(),
 });
 
 export const ProductSchema = z
@@ -17,6 +18,15 @@ export const ProductSchema = z
     rating: z.number(),
     reviews: z.array(ReviewSchema),
     thumbnail: z.url(),
+    images: z.array(z.url()),
+    tags: z.array(z.string()),
+    brand: z.string().optional(),
+    sku: z.string(),
+    warrantyInformation: z.string(),
+    shippingInformation: z.string(),
+    stock: z.number(),
+    availabilityStatus: z.string(),
+    returnPolicy: z.string(),
   })
   .transform((data) => ({
     ...data,
@@ -29,6 +39,10 @@ export const ProductSchema = z
       data.discountPercentage && Math.round(data.discountPercentage) > 0
         ? `${Math.round(data.discountPercentage)}% OFF`
         : null,
+    reviews: [...data.reviews].sort((a, b) => {
+      if (b.rating !== a.rating) return b.rating - a.rating;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }),
   }));
 
 export type Product = z.infer<typeof ProductSchema>;
