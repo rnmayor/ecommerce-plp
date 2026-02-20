@@ -1,8 +1,8 @@
+import '@ecommerce/ui/globals.css';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 
 import type { Metadata } from 'next';
-
-import '@ecommerce/ui/globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'E-Commerce PLP',
-  description: 'Product Listing Page',
+  title: {
+    template: '%s | E-Commerce PLP',
+    default: 'E-Commerce PLP',
+  },
+  description: 'E-Commerce PLP',
 };
 
 export default function RootLayout({
@@ -30,7 +33,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

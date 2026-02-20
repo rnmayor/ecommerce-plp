@@ -1,17 +1,26 @@
+import { Nav } from 'shared/components/nav';
+
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <header className="flex shrink-0 items-center justify-between border-b p-4">
-        <div>Company Logo</div>
-        <nav aria-label="Primary Navigation">
-          <ul className="flex gap-x-4">
-            <li>Navigation 1</li>
-            <li>Navigation 2</li>
-          </ul>
-        </nav>
+        <div className="p-3 hover:scale-105 transition-all duration-200">
+          <span className="text-3xl uppercase text-[#ff3377] font-extrabold tracking-widest">
+            rm
+          </span>
+        </div>
+        <Nav />
       </header>
       <main className="flex flex-1 overflow-auto">{children}</main>
-      <footer className="shrink-0 p-4 border-t">Footer</footer>
+      <footer className="shrink-0 p-8 border-t">
+        <div className="flex items-center justify-center">
+          <p className="text-center text-muted-foreground">
+            Copyright &copy;{' '}
+            {new Date().getFullYear() > 2026 ? `2026-${new Date().getFullYear()}` : `2026`} Ronel
+            Mayor. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

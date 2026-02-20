@@ -6,6 +6,11 @@ import { ProductSearch } from 'features/products/components/product-search';
 import { ProductSortSelect } from 'features/products/components/product-sort-select';
 
 import type { Product } from 'features/products/schemas/product-schema';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Shop All Products',
+};
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

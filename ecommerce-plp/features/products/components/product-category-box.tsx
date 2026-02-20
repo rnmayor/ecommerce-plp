@@ -114,7 +114,7 @@ export const ProductCategoryBox = ({ label, icon }: ProductCategoryBoxProps) => 
         'flex flex-col w-[110px] h-22 items-center justify-between p-3 gap-2 rounded-xl transition-all cursor-pointer shadow-sm hover:scale-105 hover:shadow-md',
         isSelected
           ? `bg-foreground/80 text-background shadow-inner`
-          : `text-muted-foreground border border-border hover:text-primary hover:bg-accent`,
+          : `text-muted-foreground border border-border hover:text-primary hover:bg-accent dark:hover:text-accent-foreground`,
       )}
     >
       <div className="flex flex-1 items-center justify-center">
