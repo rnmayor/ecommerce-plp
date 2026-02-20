@@ -7,7 +7,6 @@ import {
   CarFront,
   Citrus,
   Droplets,
-  Dumbbell,
   Flower,
   Footprints,
   Gem,
@@ -21,12 +20,14 @@ import {
   Smartphone,
   Sofa,
   Sparkles,
-  TableProperties,
+  TabletSmartphone,
   UtensilsCrossed,
+  Volleyball,
   Watch,
 } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useTransition } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 const iconMap = {
   sparkles: Sparkles,
@@ -43,9 +44,9 @@ const iconMap = {
   bike: Bike,
   droplets: Droplets,
   smartphone: Smartphone,
-  dumbbell: Dumbbell,
+  volleyball: Volleyball,
   glasses: Glasses,
-  tableProperties: TableProperties,
+  tabletSmartphone: TabletSmartphone,
   shoppingBag: ShoppingBag,
   carFront: CarFront,
   briefcase: Briefcase,
@@ -67,45 +68,34 @@ export const ProductCategoryBox = ({ label, icon }: ProductCategoryBoxProps) => 
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
+  const [isPending, startTransition] = useTransition();
+
   const handleClick = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
     const categoryValue = label.toLowerCase();
 
-    const currentCategoriesRaw = params.get('category');
-    let categories = currentCategoriesRaw
-      ? currentCategoriesRaw
-          .split(',')
-          .map((c) => c.trim().toLowerCase())
-          .filter(Boolean)
-      : [];
-    if (categories.includes(categoryValue)) {
-      categories = categories.filter((c) => c !== categoryValue);
-    } else {
-      categories.push(categoryValue);
-    }
-
     // update the params
-    if (categories.length > 0) {
-      params.set('category', categories.join(','));
+    if (categoryValue) {
+      params.set('category', categoryValue);
     } else {
       params.delete('category');
     }
 
-    // always reset pagination when filters change
+    // always reset pagination and search when filters change
     params.delete('page');
+    params.delete('search');
 
     const queryString = params.toString();
     const updatedPath = queryString ? `?${queryString}` : '';
 
-    router.push(`${pathname}${updatedPath}`);
+    startTransition(() => {
+      router.replace(`${pathname}${updatedPath}`, { scroll: false });
+    });
   }, [label, router, searchParams, pathname]);
 
-  const currentCategories = searchParams.get('category') || '';
+  const currentCategory = searchParams.get('category') || '';
 
-  const isSelected = currentCategories
-    .split(',')
-    .map((c) => c.trim().toLowerCase())
-    .includes(label.toLowerCase());
+  const isSelected = currentCategory.toLowerCase() === label.toLowerCase();
 
   return (
     <div
@@ -115,10 +105,15 @@ export const ProductCategoryBox = ({ label, icon }: ProductCategoryBoxProps) => 
         isSelected
           ? `bg-foreground/80 text-background shadow-inner`
           : `text-muted-foreground border border-border hover:text-primary hover:bg-accent dark:hover:text-accent-foreground`,
+        isPending && 'pointer-events-none',
       )}
     >
       <div className="flex flex-1 items-center justify-center">
-        <Icon size={26} />
+        {isPending ? (
+          <ClipLoader color="text-muted-foreground" size={20} aria-label="Loading..." />
+        ) : (
+          <Icon size={26} />
+        )}
       </div>
       <div className="flex items-center justify-center h-8 w-full mt-auto">
         <div title={label} className="font-semibold text-xs leading-tight text-center line-clamp-2">

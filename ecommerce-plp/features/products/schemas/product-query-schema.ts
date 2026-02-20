@@ -4,16 +4,7 @@ import { SORT_OPTIONS } from '../constants';
 
 export const ProductQuerySchema = z.object({
   search: z.string().optional(),
-  category: z
-    .string()
-    .optional()
-    .transform((val) => {
-      if (!val) return [];
-      return val
-        .split(',')
-        .map((s) => s.trim().toLowerCase())
-        .filter(Boolean);
-    }),
+  category: z.string().optional(),
   sort: z
     .enum(SORT_OPTIONS.map((o) => o.value))
     .optional()

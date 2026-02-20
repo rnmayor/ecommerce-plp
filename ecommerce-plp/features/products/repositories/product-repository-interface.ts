@@ -1,6 +1,11 @@
 import type { Product, RawProductListResponse } from '../schemas/product-schema';
 
 export interface IProductRepository {
-  findAll(): Promise<RawProductListResponse>;
+  findAll(params?: { limit?: number; skip?: number }): Promise<RawProductListResponse>;
   findById(id: string): Promise<Product>;
+  search(q: string, params?: { limit?: number; skip?: number }): Promise<RawProductListResponse>;
+  findByCategory(
+    category: string,
+    params?: { limit?: number; skip?: number },
+  ): Promise<RawProductListResponse>;
 }

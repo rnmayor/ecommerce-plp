@@ -1,11 +1,11 @@
-import { paginate, sortItems } from '@ecommerce/core';
+import { sortItems } from '@ecommerce/core';
 import { z } from 'zod';
 
-import { SEARCHABLE_KEYS } from '../constants';
 import {
-  ProductListResponseSchema,
   type ProductListResponse,
   type Product,
+  type RawProductListResponse,
+  ProductListResponseSchema,
 } from '../schemas/product-schema';
 
 import type { IProductRepository } from '../repositories/product-repository-interface';
@@ -15,41 +15,36 @@ export async function getProducts(
   query: ProductQuery,
   repository: IProductRepository,
 ): Promise<ProductListResponse> {
-  const { search, category, sort, page: pageQuery, limit: limitQuery } = query;
-  const repoData = await repository.findAll();
-  let products = [...repoData.products];
+  const { search, category, sort, page, limit } = query;
 
-  // search
-  if (search) {
-    const searchLower = search.toLowerCase();
-    products = products.filter((p) =>
-      SEARCHABLE_KEYS.some((key) => String(p[key]).toLowerCase().includes(searchLower)),
-    );
+  const safePage = Math.max(1, page);
+  const safeLimit = Math.max(1, limit);
+  const skip = (safePage - 1) * safeLimit;
+  const params = { limit: safeLimit, skip };
+
+  let repoData: RawProductListResponse;
+  if (category) {
+    repoData = await repository.findByCategory(category, params);
+  } else if (search) {
+    repoData = await repository.search(search, params);
+  } else {
+    repoData = await repository.findAll(params);
   }
 
-  // filter by category
-  if (category && category.length > 0) {
-    products = products.filter((p) => category.includes(p.category.toLowerCase()));
-  }
-
+  const products = [...repoData.products];
   // sort
   const sorted = sortItems(products, sort.key, sort.order);
+  const totalPages = Math.ceil(repoData.total / safeLimit);
 
-  // paginate
-  const { items, total, limit, skip, page, totalPages, hasPrevPage, hasNextPage } = paginate(
-    sorted,
-    pageQuery,
-    limitQuery,
-  );
   const output = {
-    products: items,
-    total,
-    limit,
-    skip,
+    products: sorted,
+    total: repoData.total,
+    limit: safeLimit,
+    skip: repoData.skip,
     page,
     totalPages,
-    hasPrevPage,
-    hasNextPage,
+    hasPrevPage: safePage > 1,
+    hasNextPage: safePage < totalPages,
   };
 
   const result = ProductListResponseSchema.safeParse(output);

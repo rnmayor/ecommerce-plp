@@ -58,16 +58,16 @@ export const CATEGORIES = [
     icon: 'smartphone',
   },
   {
-    label: 'Sports',
-    icon: 'dumbbell',
+    label: 'Sports-Accessories',
+    icon: 'volleyball',
   },
   {
     label: 'Sunglasses',
     icon: 'glasses',
   },
   {
-    label: 'Tables',
-    icon: 'tableProperties',
+    label: 'Tablets',
+    icon: 'tabletSmartphone',
   },
   {
     label: 'Tops',
@@ -114,9 +114,18 @@ export const SORT_OPTIONS: SortOption[] = [
     value: 'price-desc',
   },
   {
-    label: 'Avg. Customer Review',
+    label: 'Customer Review',
     value: 'rating-desc',
   },
 ];
 
 export const SEARCHABLE_KEYS: (keyof Product)[] = ['title', 'description'];
+
+export const ERRORMAP: Record<string, string> = {
+  FETCH_FAILED: 'We are having trouble loading the data. Please check your connection.',
+  INVALID_FILTERS:
+    "The current filters aren't returning any results. Try clearing them to see more.",
+  PRODUCT_NOT_FOUND: "The item you are looking for isn't available.",
+  DATA_INTEGRITY_ERROR: 'The product information is currently unreadable. We will look into it.',
+  DEFAULT: 'An unexpected error occured. We will fix this as soon as possible.',
+};

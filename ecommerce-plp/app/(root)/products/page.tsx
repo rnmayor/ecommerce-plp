@@ -41,6 +41,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+        {result.products.length === 0 && (
+          <div className="flex h-full items-center justify-center uppercase tracking-tighter md:tracking-wide text-center text-3xl font-bold text-destructive/80">
+            No results found
+          </div>
+        )}
       </div>
       <div className="flex shrink-0 mt-2 pb-8">
         <ProductPagination
