@@ -2,6 +2,7 @@ import { getProductsAction } from 'features/products/actions/get-products';
 import { ProductCard } from 'features/products/components/product-card';
 import { ProductCategories } from 'features/products/components/product-categories';
 import { ProductPagination } from 'features/products/components/product-pagination';
+import { ProductResultsHeader } from 'features/products/components/product-results-header';
 import { ProductSearch } from 'features/products/components/product-search';
 import { ProductSortSelect } from 'features/products/components/product-sort-select';
 
@@ -23,11 +24,10 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   return (
     <div className="container mx-auto flex flex-col items-center gap-y-4 px-4 py-10">
       <ProductCategories />
+      <ProductResultsHeader totalResults={result.total} />
+
       <div className="flex w-full flex-col gap-y-4 items-center py-4 md:grid md:grid-cols-3">
-        <div className="flex flex-col">
-          <h1 className="text-xl font-semibold tracking-tight">All Products</h1>
-          <p className="text-sm text-muted-foreground">{result?.total ?? 0} result(s) found.</p>
-        </div>
+        <div className="hidden md:block"></div>
         <div className="flex w-full max-w-md justify-center">
           <ProductSearch />
         </div>

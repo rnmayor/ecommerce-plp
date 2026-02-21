@@ -1,14 +1,15 @@
+import Link from 'next/link';
 import { Nav } from 'shared/components/nav';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <header className="flex shrink-0 items-center justify-between border-b p-4">
-        <div className="p-3 hover:scale-105 transition-all duration-200">
+        <Link className="p-3 hover:scale-105 transition-all duration-200" href="/">
           <span className="text-3xl uppercase text-[#ff3377] font-extrabold tracking-widest">
             rm
           </span>
-        </div>
+        </Link>
         <Nav />
       </header>
       <main className="flex flex-1 overflow-auto">{children}</main>
