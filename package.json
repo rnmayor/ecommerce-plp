@@ -4,6 +4,7 @@
   "description": "Mini e-commerce web application showing high-quality Product Listings Page (PLP)",
   "private": true,
   "scripts": {
+    "start": "pnpm -r --parallel --filter \"./ecommerce-plp\" start",
     "dev": "pnpm -r --parallel --filter \"./ecommerce-plp\" dev",
     "build": "pnpm build:packages && pnpm build:app",
     "build:packages": "pnpm -r --filter \"./packages/*\" build",

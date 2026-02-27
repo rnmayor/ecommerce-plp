@@ -1,3 +1,5 @@
+import { cacheLife, cacheTag } from 'next/cache';
+
 import {
   type Product,
   ProductSchema,
@@ -24,6 +26,10 @@ const buildUrl = (path: string, params?: { limit?: number; skip?: number }) => {
 export const jsonRepository = (): IProductRepository => {
   return {
     async findAll(params): Promise<RawProductListResponse> {
+      'use cache';
+      cacheLife('minutes');
+      cacheTag('products-all');
+
       const res = await fetch(buildUrl('', params));
       if (!res.ok) throw new Error('FETCH_FAILED');
 
@@ -40,6 +46,10 @@ export const jsonRepository = (): IProductRepository => {
     },
 
     async findByCategory(category: string, params): Promise<RawProductListResponse> {
+      'use cache';
+      cacheLife('hours');
+      cacheTag(`products-category-${category}`);
+
       const res = await fetch(buildUrl(`/category/${category}`, params));
       if (!res.ok) throw new Error('FETCH_FAILED');
 
@@ -48,6 +58,10 @@ export const jsonRepository = (): IProductRepository => {
     },
 
     async findById(id: string): Promise<Product> {
+      'use cache';
+      cacheLife('hours');
+      cacheTag(`product-detail-${id}`);
+
       const res = await fetch(`${BASE_URL}/${id}`);
       if (res.status === 404) throw new Error('PRODUCT_NOT_FOUND');
       if (!res.ok) throw new Error('FETCH_FAILED');

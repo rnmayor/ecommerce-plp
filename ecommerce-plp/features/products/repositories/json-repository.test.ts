@@ -2,7 +2,12 @@ import { BASE_URL, jsonRepository } from 'features/products/repositories/json-re
 import { createMockProduct } from 'features/products/testing/product-factory';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { it, describe, beforeAll, afterEach, afterAll } from 'vitest';
+import { it, describe, beforeAll, afterEach, afterAll, vi } from 'vitest';
+
+vi.mock('next/cache', () => ({
+  cacheLife: vi.fn(),
+  cacheTag: vi.fn(),
+}));
 
 const server = setupServer(
   // handler for base: findAll

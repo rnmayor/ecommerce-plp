@@ -50,7 +50,7 @@ B. Filtering
 
 - Output: Ensures users always get accurate, validated results directly from the DummyJson API.
 
-C. Layered Architecture
+C. Layered Architecture (with caching)
 
 - Initial Plan/Implementation:
 
@@ -59,14 +59,18 @@ App Router (Server Components) -> API Route (api/products) -> Product Service ->
 ```
 
 - Actual Implementation:
-  - Leverage Next.js capability to call the `getProducts` service directly within the server component through a "Feature Action" wrapper, which encapsulates the service logic.
+  - Leverage Next.js capability to call the `getProducts` service directly within the server component via the `module pattern`, which encapsulates the service logic.
+  - The module exposes methods (`getProducts`, `getProductById`), that internally call the repository
+  - Repository functions now use `'use cache'` with `cachelife` and `cacheTag` to cache API results at the data layer
 
 ```
-App Router (Server Components) -> Feature Action (Wrapper) -> Product Service -> Repository -> Json Data
+App Router (Server Components) -> Product Module -> Product Service -> Repository (with caching) -> Json Data
 ```
 
 - Output:
   - We eliminated the internal HTTP overhead and network hops, while still keeping the API routes available for external/client-side use.
+  - Server components fetch data directly from the repository
+  - Repository-level caching ensures repeated calls (with the TTL) returns instantly, reducing backend load and speeding up server-side rendering.
 
 D. User Experience
 
@@ -82,7 +86,19 @@ D. User Experience
 
 ## Technical Highlights
 
-1. Domain-Driven Layered Architecture: We implemented strict "Layered Architecture" (Repository -> Service -> Action/Route). This separates the data-fetching logic (Repository) from the business rule (Service), making the codebase highly maintainable, testable, and independent of the external API's structure.
+1. Domain-Driven Layered Architecture: We implemented strict "Layered Architecture". This separates the data-fetching logic (Repository) from the business rule (Service), making the codebase highly maintainable, testable, and independent of the external API's structure.
+
+```
+App Router (Server Components)
+        ↓
+Product Module
+        ↓
+Product Service
+        ↓
+Repository (with caching)
+        ↓
+External API (DummyJSON)
+```
 
 2. Modular Package-Feature Architecture: Organized the codebase that separates the shared logic into "Packages" (core and ui) and domain-specific logic into "Features". Utilize a "feature-slice" approach within the application, ensuring that all components, hooks, schemas, and logic related to a specific feature domain stays together. This ensures the code is highly discoverable and decoupled from core business logic and allows consistent design language while keeping the app easy to scale and maintain.
 

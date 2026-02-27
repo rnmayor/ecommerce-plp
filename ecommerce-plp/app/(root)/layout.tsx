@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { Nav } from 'shared/components/nav';
+
+const FULL_YEAR = new Date().getFullYear();
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,15 +13,16 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             rm
           </span>
         </Link>
-        <Nav />
+        <Suspense fallback="loading...">
+          <Nav />
+        </Suspense>
       </header>
       <main className="flex flex-1 overflow-auto">{children}</main>
       <footer className="shrink-0 p-8 border-t">
         <div className="flex items-center justify-center">
           <p className="text-center text-muted-foreground">
-            Copyright &copy;{' '}
-            {new Date().getFullYear() > 2026 ? `2026-${new Date().getFullYear()}` : `2026`} Ronel
-            Mayor. All rights reserved.
+            Copyright &copy; {FULL_YEAR > 2026 ? `2026-${FULL_YEAR}` : `2026`} Ronel Mayor. All
+            rights reserved.
           </p>
         </div>
       </footer>

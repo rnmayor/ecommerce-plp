@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here... */
-  // cacheComponents: true, // enable cache components
+  cacheComponents: true, // enable cache components
   images: {
     remotePatterns: [
       {
