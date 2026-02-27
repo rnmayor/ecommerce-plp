@@ -1,4 +1,4 @@
-# Product Listings Page (PLP) - High Level Design
+# Product Listings Page (PLP) - Technical Implementation
 
 ## Objective:
 
@@ -75,7 +75,7 @@ D. User Experience
 
 - Actual Implementation:
   - Switched to `router.replace()` to swap the current URL without cluttering the browser's history.
-  - Wrapped URL update in the `startTransition()`, a "background worker" that marks the URL change as "low priority" update - telling React to process the change in the background so it can handles the heavy lifting of navigation without interrupting the user's current actions.
+  - Wrapped URL update in the `startTransition()`, a "background worker" that marks the URL change as "low priority" update - telling React to process the change in the background so it can handle the heavy lifting of navigation without interrupting the user's current actions.
   - Used `isPending` to provide visual feedback (using loaders) while the "Server Component" is re-rendering the background data.
 
 - Output: Keeps the user's experience seamless and non-blocking.

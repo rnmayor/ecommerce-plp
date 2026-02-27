@@ -1,6 +1,5 @@
-import { jsonRepository } from 'features/products/repositories/json-repository';
+import { productModule } from 'features/products/module';
 import { ProductQuerySchema } from 'features/products/schemas/product-query-schema';
-import { getProducts } from 'features/products/services/product-service';
 import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -9,7 +8,7 @@ export async function GET(req: NextRequest) {
     const queryObject = Object.fromEntries(req.nextUrl.searchParams);
     const parsedQuery = ProductQuerySchema.parse(queryObject);
 
-    const data = await getProducts(parsedQuery, jsonRepository());
+    const data = await productModule.getProducts(parsedQuery);
 
     return NextResponse.json(data, { status: 200 });
   } catch (error: unknown) {

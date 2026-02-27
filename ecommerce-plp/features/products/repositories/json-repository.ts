@@ -7,7 +7,7 @@ import {
 
 import type { IProductRepository } from './product-repository-interface';
 
-const BASE_URL = `https://dummyjson.com/products`;
+export const BASE_URL = `https://dummyjson.com/products`;
 
 const buildUrl = (path: string, params?: { limit?: number; skip?: number }) => {
   const url = new URL(`${BASE_URL}${path}`);
@@ -31,15 +31,6 @@ export const jsonRepository = (): IProductRepository => {
       return RawProductResponseSchema.parse(json);
     },
 
-    async findById(id: string): Promise<Product> {
-      const res = await fetch(`${BASE_URL}/${id}`);
-      if (res.status === 404) throw new Error('PRODUCT_NOT_FOUND');
-      if (!res.ok) throw new Error('FETCH_FAILED');
-
-      const json = await res.json();
-      return ProductSchema.parse(json);
-    },
-
     async search(query: string, params): Promise<RawProductListResponse> {
       const res = await fetch(buildUrl(`/search?q=${query}`, params));
       if (!res.ok) throw new Error('FETCH_FAILED');
@@ -54,6 +45,15 @@ export const jsonRepository = (): IProductRepository => {
 
       const json = await res.json();
       return RawProductResponseSchema.parse(json);
+    },
+
+    async findById(id: string): Promise<Product> {
+      const res = await fetch(`${BASE_URL}/${id}`);
+      if (res.status === 404) throw new Error('PRODUCT_NOT_FOUND');
+      if (!res.ok) throw new Error('FETCH_FAILED');
+
+      const json = await res.json();
+      return ProductSchema.parse(json);
     },
   };
 };

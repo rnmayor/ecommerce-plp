@@ -1,10 +1,11 @@
-import { getProductsAction } from 'features/products/actions/get-products';
 import { ProductCard } from 'features/products/components/product-card';
 import { ProductCategories } from 'features/products/components/product-categories';
 import { ProductPagination } from 'features/products/components/product-pagination';
 import { ProductResultsHeader } from 'features/products/components/product-results-header';
 import { ProductSearch } from 'features/products/components/product-search';
 import { ProductSortSelect } from 'features/products/components/product-sort-select';
+import { productModule } from 'features/products/module';
+import { ProductQuerySchema } from 'features/products/schemas/product-query-schema';
 
 import type { Product } from 'features/products/schemas/product-schema';
 import type { Metadata } from 'next';
@@ -19,7 +20,12 @@ interface PageProps {
 
 export default async function ProductsPage({ searchParams }: PageProps) {
   const rawParams = await searchParams;
-  const result = await getProductsAction(rawParams);
+  const parsed = ProductQuerySchema.safeParse(rawParams);
+  if (!parsed.success) {
+    throw new Error('INVALID_PARAMS');
+  }
+
+  const result = await productModule.getProducts(parsed.data);
 
   return (
     <div className="container mx-auto flex flex-col items-center gap-y-4 px-4 py-10">
