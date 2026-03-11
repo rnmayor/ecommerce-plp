@@ -66,6 +66,7 @@ export const ProductSortSelect = () => {
             ) : (
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
+                  aria-label="Sort by:"
                   size="icon-xs"
                   variant="ghost"
                   asChild

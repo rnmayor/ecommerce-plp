@@ -32,12 +32,13 @@ export const ProductCard = ({ product }: ProductProps) => {
         </Badge>
       )}
       <Link
+        aria-label={`View ${product.title}`}
         className="relative h-[200px] w-full overflow-hidden bg-muted"
         href={`${pathname}/${product.id}`}
       >
         <Image
           src={product.thumbnail}
-          alt="Product Cover"
+          alt={`${product.title}`}
           fill
           sizes="250px"
           className="object-contain transition-transform duration-300 group-hover:scale-105"

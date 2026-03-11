@@ -13,11 +13,21 @@ export default async function Home() {
         size="lg"
         asChild
       >
-        <Link href={'/products'} className="flex items-center justify-center">
-          <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500">
+        <Link
+          href={'/products'}
+          className="flex items-center justify-center"
+          aria-label="Discover more products"
+        >
+          <span
+            aria-hidden="true"
+            className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500"
+          >
             discover more
           </span>
-          <div className="absolute flex items-center gap-x-2 -translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300">
+          <div
+            aria-hidden="true"
+            className="absolute flex items-center gap-x-2 -translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300"
+          >
             <span>let&apos;s go</span>
             <MoveRight />
           </div>
